@@ -1,12 +1,14 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MeshGenerator : MonoBehaviour
 {
     public SquareGrid squareGrid;
-
+    List<Vector3> vertices;
+    List<int> triangles;
 
     public class Node
     {
@@ -88,9 +90,16 @@ public class MeshGenerator : MonoBehaviour
             }
         }
     }
+    void AssignVertices(Node[] points)
+    {
+        for(int i = 0; i < points.Length; i++)
+        {
+
+        }
+    }
     void MeshFromPoints(params Node[] points)
     {
-
+        AssignVertices(points);
     }
 
     void TriangulateSquare(Square square)
@@ -120,13 +129,37 @@ public class MeshGenerator : MonoBehaviour
                 MeshFromPoints(square.centerRight, square.bottomRight, square.bottomLeft, square.centerLeft);
                 break;
             case 5:
-                MeshFromPoints(square.centerRight, square.bottomRight, square.bottomLeft, square.centerLeft);
+                MeshFromPoints(square.centerTop, square.topRight, square.centerRight, square.centerBottom);
                 break;
             case 6:
-                MeshFromPoints(square.centerTop, square.topRight, square.bottomRight, square.centerBottom);
+                MeshFromPoints(square.centerTop, square.topRight, square.bottomRight, square.centerBottom,square.bottomLeft, square.centerLeft);
                 break;
             case 9:
                 MeshFromPoints(square.topLeft, square.centerTop, square.centerBottom, square.bottomLeft);
+                break;
+            case 10:
+                MeshFromPoints(square.topLeft, square.centerTop, square.centerRight, square.bottomRight,square.centerBottom,square.centerLeft);
+                break;
+            case 12:
+                MeshFromPoints(square.topLeft, square.topRight, square.centerRight, square.centerLeft);
+                break;
+
+            // 3 Points
+            case 7:
+                MeshFromPoints(square.centerTop, square.topRight, square.bottomLeft, square.bottomRight, square.centerLeft);
+                break;
+            case 11:
+                MeshFromPoints(square.topLeft, square.centerTop, square.centerRight, square.bottomRight, square.bottomLeft);
+                break;
+            case 13:
+                MeshFromPoints(square.topLeft, square.topRight, square.centerRight, square.centerBottom, square.bottomLeft);
+                break;
+            case 14:
+                MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.centerBottom, square.centerLeft);
+                break;
+            // 4 Points
+            case 15:
+                MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.bottomRight, square.bottomLeft);
                 break;
         }
     }
