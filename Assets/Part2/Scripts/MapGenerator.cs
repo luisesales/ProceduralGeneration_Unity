@@ -20,21 +20,31 @@ public class MapGenerator : MonoBehaviour
         GenerateMap();
     }
 
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            GenerateMap();
+        }
+    }
+
     void GenerateMap()
     {
         map = new int[mapWidht, mapHeight];
         RandomFillMap();
-        SmoothMap();
+        for(int i = 0; i < 6; i++) SmoothMap();
+        MeshGenerator meshGen = GetComponent<MeshGenerator>();
+        meshGen.GenerateMesh(map, 1);
     }
 
     int GetSurroundingWallCount(int x, int y)
     {
         int wallCount = 0;
-        for(int neighbourX= x -1; neighbourX <= x+1; neighbourX++)
+        for(int neighbourX = x - 1; neighbourX <= x + 1; neighbourX++)
         {
-            for(int neighbourY = y -1; neighbourY <= y+1; neighbourY++)
+            for(int neighbourY = y - 1; neighbourY <= y + 1; neighbourY++)
             {
-                if (neighbourX == 0 && neighbourX < mapWidht && neighbourY >= 0 && neighbourY < mapHeight)
+                if (neighbourX >= 0 && neighbourX < mapWidht && neighbourY >= 0 && neighbourY < mapHeight)
                 {
                     if (neighbourX != x || neighbourY != y)
                     {
@@ -90,7 +100,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     private void OnDrawGizmos()
-    {
+    {/*
         if(map != null)
         {
             for (int i = 0; i < mapWidht; i++)
@@ -103,6 +113,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+       */ 
     }
     
         
