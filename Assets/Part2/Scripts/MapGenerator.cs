@@ -15,6 +15,43 @@ public class MapGenerator : MonoBehaviour
 
     [Range(0, 100)]
     public int randomFillPercent;
+
+    struct Coord
+    {
+	public int tileX,tileY;
+	
+	public Coord(int x, int y)
+	{
+	   tileX = x; 
+	   tileY = y; 
+	}
+    }
+
+    List<Coord> GetRegionTiles(int startX, int startY)
+    {
+	List<Coord> tiles = new List<Coord>();
+        int [,] mapFlags = new int[mapWidth,mapHeight];
+	int tileType = map[startX,startY];
+
+	Queue<Coord> queue = new Queue<Coord>();
+	queue.Enqueue(new Coord(startX,startY));
+	mapFlags[startX,startY] = 1;
+
+	while(queue.Count > 0)
+	{
+	   Coord tile = queue.Dequeue();
+	   tiles.Add(tile);
+	   
+	   for(int x = tile.tileX - 1; x <= tile.tileX + 1; x++)
+	   {
+	      for(int y = tile.tileY - 1; y <= tile.tileY + 1; y++)
+	      {
+	   
+	      }
+	   }
+	}
+    }
+
     void Start()
     {
         GenerateMap();
