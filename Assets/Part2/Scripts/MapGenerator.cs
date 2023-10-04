@@ -7,7 +7,7 @@ public class MapGenerator : MonoBehaviour
 {
     
     private int[,] map;
-    public int mapWidht, mapHeight;
+    public int mapWidht, mapHeight,borderSize;
     //public float noiseScale;
 
     public string seed;
@@ -33,8 +33,25 @@ public class MapGenerator : MonoBehaviour
         map = new int[mapWidht, mapHeight];
         RandomFillMap();
         for(int i = 0; i < 6; i++) SmoothMap();
-        MeshGenerator meshGen = GetComponent<MeshGenerator>();
-        meshGen.GenerateMesh(map, 1);
+        
+        int[,] borderedMap = new int[mapWidht + borderSize * 2, mapHeight + borderSize * 2];
+
+        for (int i = 0; i < borderedMap.GetLength(0); i++)
+        {
+            for (int j = 0; j < borderedMap.GetLength(1); j++)
+            {
+                if ( i  >= borderSize && i < mapWidht + borderSize && j >= borderSize && j < mapHeight + borderSize)
+                {
+                    borderedMap[i, j] = map[i - borderSize, j - borderSize];
+                }
+                else
+                {
+                    borderedMap[i,j] = 1;
+                }
+            }
+        }
+                MeshGenerator meshGen = GetComponent<MeshGenerator>();
+        meshGen.GenerateMesh(borderedMap, 1);
     }
 
     int GetSurroundingWallCount(int x, int y)
