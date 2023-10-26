@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MeshGenerator : MonoBehaviour
+public class MeshGeneratorCave : MonoBehaviour
 {
 
     public SquareGrid squareGrid;
@@ -16,7 +16,7 @@ public class MeshGenerator : MonoBehaviour
     List<List<int>> outlines = new List<List<int>>();
     HashSet<int> checkedVertices = new HashSet<int>();
 
-    public void GenerateMesh(int[,] map, float squareSize)
+    public void GenerateMeshCave(int[,] map, float squareSize)
     {
 
         triangleDictionary.Clear();

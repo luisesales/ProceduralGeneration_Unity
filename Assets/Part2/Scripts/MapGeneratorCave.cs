@@ -19,18 +19,18 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
-        GenerateMap();
+        GenerateCaveMap();
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GenerateMap();
+            GenerateCaveMap();
         }
     }
 
-    void GenerateMap()
+    void GenerateCaveMap()
     {
         map = new int[width, height];
         RandomFillMap();
@@ -40,7 +40,7 @@ public class MapGenerator : MonoBehaviour
             SmoothMap();
         }
 
-        ProcessMap();
+        
 
         int borderSize = 1;
         int[,] borderedMap = new int[width + borderSize * 2, height + borderSize * 2];
@@ -60,8 +60,9 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        MeshGenerator meshGen = GetComponent<MeshGenerator>();
-        meshGen.GenerateMesh(borderedMap, 1);
+        ProcessMap();
+        MeshGeneratorCave meshGen = GetComponent<MeshGeneratorCave>();
+        meshGen.GenerateMeshCave(borderedMap, 1);
     }
 
     void ProcessMap()
@@ -98,6 +99,7 @@ public class MapGenerator : MonoBehaviour
                 survivingRooms.Add(new Room(roomRegion, map));
             }
         }
+       
         survivingRooms.Sort();
         survivingRooms[0].isMainRoom = true;
         survivingRooms[0].isAccessibleFromMainRoom = true;
@@ -227,7 +229,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-
+        
         return regions;
     }
 
